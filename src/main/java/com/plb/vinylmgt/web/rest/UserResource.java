@@ -3,6 +3,11 @@ package com.plb.vinylmgt.web.rest;
 import com.plb.vinylmgt.entity.User;
 import com.plb.vinylmgt.error.UserNotFoundException;
 import com.plb.vinylmgt.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -29,6 +34,13 @@ public class UserResource {
         return ResponseEntity.ok(userService.getAll());
     }
 
+    @Operation(summary = "Get a user by its id")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found the user",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = User.class)) }),
+            @ApiResponse(responseCode = "400", description = "Invalid id supplied"),
+            @ApiResponse(responseCode = "404", description = "User not found") })
     @GetMapping("get-by-id")
     public ResponseEntity<User> get(@RequestParam UUID id) {
         Optional<User> userById = userService.getById(id);
