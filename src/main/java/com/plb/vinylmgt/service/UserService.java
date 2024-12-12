@@ -1,8 +1,12 @@
 package com.plb.vinylmgt.service;
 
+import com.plb.vinylmgt.configuration.security.SecurityUtils;
 import com.plb.vinylmgt.entity.User;
 import com.plb.vinylmgt.error.UserNotFoundException;
 import com.plb.vinylmgt.repository.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,9 +18,11 @@ import java.util.UUID;
 public class UserService {
 
     private final UserRepository userRepository;
+    private PasswordEncoder passwordEncoder;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional(readOnly = true)
@@ -26,6 +32,8 @@ public class UserService {
 
     @Transactional
     public User save(User newUser) {
+        newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        newUser.setAuthorities(SecurityUtils.USER);
         return userRepository.save(newUser);
     }
 
@@ -40,5 +48,11 @@ public class UserService {
         if (nbOfDeletedUsers == 0) {
             throw new UserNotFoundException("User not found");
         }
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<User> getConnectedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return userRepository.findOneByEmailEqualsIgnoreCase(authentication.getName());
     }
 }

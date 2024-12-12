@@ -12,7 +12,6 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -53,7 +52,7 @@ public class UserResource {
         return ResponseEntity.ok(userService.save(newUser));
     }
 
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
+
     @PutMapping
     public ResponseEntity<User> update(@Valid @RequestBody User updateUser) {
         return ResponseEntity.ok(userService.save(updateUser));

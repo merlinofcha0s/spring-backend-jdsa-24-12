@@ -3,6 +3,7 @@ package com.plb.vinylmgt.configuration;
 import com.plb.vinylmgt.configuration.security.VinylJwtAuthenticationConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -28,6 +29,8 @@ public class SecurityConfiguration {
                                 authorize.requestMatchers("/h2-console/**").permitAll()
                                         .requestMatchers("/swagger-ui/**").permitAll()
                                         .requestMatchers("/v3/**").permitAll()
+                                        .requestMatchers(HttpMethod.POST, "/api/register").permitAll()
+                                        .requestMatchers(HttpMethod.POST, "/api/authenticate").permitAll()
                                         .requestMatchers("/api/**").authenticated())
                 .headers(headers -> headers
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin))
