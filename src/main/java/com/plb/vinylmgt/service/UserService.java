@@ -25,6 +25,9 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * @return
+     */
     @Transactional(readOnly = true)
     public List<User> getAll() {
         return userRepository.findAll();
