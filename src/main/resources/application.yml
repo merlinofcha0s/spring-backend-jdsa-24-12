@@ -6,11 +6,15 @@ spring:
       enabled: true
   datasource:
     url: jdbc:h2:file:./target/vinylDB
-logging:
-  level:
-    org.springframework: DEBUG
+#logging:
+#  level:
+#    org.springframework: DEBUG
 
 springdoc:
   api-docs:
     enabled: true
 
+
+application:
+  jwt:
+    base64-secret: ZTlkOWNiMWU1ZjA1OTgwNDNkNWQwZDE0ZjgyMTFmMTY0ZTc5NDk4OTQxZjdmODlhNTMyODllYjEwNTAxMDYwZjBkZWY4ZGY1YTAxNDg5YTYxYzY0NWQ0ZGVjYzJmNTM2NGI0M2ZmMGU3NjA2MDBiMGMzMDU0ZTY4NWIzMTNjNzA
