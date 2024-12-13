@@ -18,3 +18,10 @@ springdoc:
 application:
   jwt:
     base64-secret: ZTlkOWNiMWU1ZjA1OTgwNDNkNWQwZDE0ZjgyMTFmMTY0ZTc5NDk4OTQxZjdmODlhNTMyODllYjEwNTAxMDYwZjBkZWY4ZGY1YTAxNDg5YTYxYzY0NWQ0ZGVjYzJmNTM2NGI0M2ZmMGU3NjA2MDBiMGMzMDU0ZTY4NWIzMTNjNzA
+  cors:
+    allowed-origins: http://localhost:4200
+    allowed-methods: "*"
+    allowed-headers: "*"
+    exposed-headers: "*"
+    allow-credentials: false
+    max-age: 300
